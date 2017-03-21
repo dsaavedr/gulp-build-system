@@ -1,7 +1,7 @@
 var gulp    = require('gulp'),
-    gutil   = require('gutil')
+    gutil   = require('gulp-util')
     pug     = require('gulp-pug'),
-    jsh     = require('gulp-jshint'),
+    eslint     = require('gulp-eslint'),
     ugly    = require('gulp-uglify'),
     sass    = require('gulp-sass'),
     babel   = require('gulp-babel'),
@@ -15,7 +15,7 @@ var gulp    = require('gulp'),
 
 //// DEFAULT TASK
 
-gulp.task('default', ['pug', 'bs', 'watch']);
+gulp.task('default', ['pug', 'bs', 'scripts', 'watch']);
 
 /// BROWSER-SYNC
 
@@ -57,22 +57,36 @@ gulp.task('style', function() {
 
 //// JAVASCRIPT TASKS
 
-gulp.task('scripts', ['jshint'], function() {
+gulp.task('scripts', ['eslint'], function() {
   gulp.src('src/js/**/*.js')
       .pipe(srcm.init())
-      .pipe(concat('bundle.js'))
-      .pipe(gutil.env.type === 'production' ? ugly() : gutil.noop())
       .pipe(babel({
-        presets: ['es2015', 'env']
+        presets: ['es2015', 'react']
       }))
+      .pipe(concat('bundle.js'))
+      // only if gulp --type production
+      .pipe(gutil.env.type === 'production' ? ugly() : gutil.noop())
       .pipe(srcm.write())
       .pipe(gulp.dest("public/assets/js"));
 });
 
-gulp.task('jshint', function() {
+gulp.task('eslint', function() {
   return gulp.src('src/js/**/*.js')
-             .pipe(jsh({
-               esversion: 6
+             .pipe(eslint({
+               baseConfig: {
+                 'plugins': [
+                   'react'
+                 ],
+                 'parserOptions': {
+                   'ecmaVersion': 6,
+                   'sourceType': 'module',
+                   'ecmaFeatures': {
+                     'jsx': true,
+                     'modules': true
+                   }
+                 }
+               }
              }))
-             .pipe(jsh.reporter('jshint-stylish'));
+             .pipe(eslint.format())
+             .pipe(eslint.failAfterError());
 });

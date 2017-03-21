@@ -1,4 +1,4 @@
-# Development system as proposed by [scoth.io](https://scotch.io/tutorials/automate-your-tasks-easily-with-gulp-js)
+# Development system as proposed by [Justin Rexroad](https://scotch.io/tutorials/automate-your-tasks-easily-with-gulp-js)
 
 ## Structure
 
