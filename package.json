@@ -1,0 +1,27 @@
+{
+  "name": "gulp-build-system",
+  "version": "1.0.0",
+  "description": "`src` will contain all the work. `assets/stylesheets/style.css` will be created by Gulp after processing and combining SASS in `src/sass`. `bundle.js` will be created after combining and processing al files on `pug`.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsaavedr/gulp-build-system.git"
+  },
+  "author": "Daniel Saavedra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dsaavedr/gulp-build-system/issues"
+  },
+  "homepage": "https://github.com/dsaavedr/gulp-build-system#readme",
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-pug": "^3.3.0",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1"
+  }
+}
