@@ -1,16 +1,17 @@
-var gulp    = require('gulp'),
+var ap      = require('gulp-autoprefixer'),
+    babel   = require('gulp-babel'),
+    concat  = require('gulp-concat'),
+    eslint  = require('gulp-eslint'),
+    gulp    = require('gulp'),
     gutil   = require('gulp-util')
     pug     = require('gulp-pug'),
-    eslint     = require('gulp-eslint'),
-    ugly    = require('gulp-uglify'),
+    rename  = require('gulp-rename'),
     sass    = require('gulp-sass'),
-    babel   = require('gulp-babel'),
-    ap      = require('gulp-autoprefixer'),
     srcm    = require('gulp-sourcemaps'),
-    concat  = require('gulp-concat'),
+    ugly    = require('gulp-uglify'),
 
-    del     = require('del'),
-    bs      = require('browser-sync');
+    bs      = require('browser-sync'),
+    del     = require('del');
 
 
 //// DEFAULT TASK
@@ -22,7 +23,7 @@ gulp.task('default', ['pug', 'bs', 'scripts', 'watch']);
 gulp.task('bs', function() {
   bs({
     server: {
-      baseDir: "./public"
+      baseDir: "./"
     }
   });
 });
@@ -42,7 +43,7 @@ gulp.task('pug', function() {
       .pipe(pug({
         pretty:true
       }))
-      .pipe(gulp.dest('public/HTML'));
+      .pipe(gulp.dest('public/assets/HTML'));
 });
 
 //// CSS TASKS
