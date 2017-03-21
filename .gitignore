@@ -1,0 +1,26 @@
+# Packages #
+############
+# Git has its own compression methods
+*.7z
+*.dmg
+*.exe
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+# Build Systems #
+#################
+node_modules
+bower_components
+src
+.sass-cache
+*.css.map
+build
+dist
