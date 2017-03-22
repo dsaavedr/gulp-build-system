@@ -59,29 +59,9 @@ gulp.task('style', function() {
 });
 
 //// JAVASCRIPT TASKS
-// , ['eslint', 'process']
-gulp.task('scripts', ['eslint'], function() {
-  gulp.src('src/js/concat.js')
-      .pipe(browser({
-        transform: babelify.configure({
-          presets: ['es2015', 'react']
-        })
-      }))
-      .pipe(rename('bundle.js'))
-      .pipe(gulp.dest('public/assets/js'))
-});
 
-gulp.task('process', function() {
-  gulp.src('src/js/**/*.js')
-      .pipe(srcm.init())
-      .pipe(babel({
-        presets: ['es2015', 'react']
-      }))
-      .pipe(concat('concat.js'))
-      // only if gulp --type production
-      .pipe(gutil.env.type === 'production' ? ugly() : gutil.noop())
-      .pipe(srcm.write())
-      .pipe(gulp.dest("src/js"));
+gulp.task('scripts', ['eslint'], function() {
+  
 });
 
 gulp.task('eslint', function() {
