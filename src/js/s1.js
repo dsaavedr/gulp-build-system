@@ -6,8 +6,8 @@ let x = {value: 1, log: 2};
 
 ({ value } = x);
 
-var page = document.getElementByTagName('body');
+var page = document.getElementById('app');
 
 ReactDOM.render(
-  <Test/>
+  <Test name="test"/>
 , page);

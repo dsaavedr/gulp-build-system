@@ -1,5 +1,7 @@
 var ap      = require('gulp-autoprefixer'),
     babel   = require('gulp-babel'),
+    babelify= require('babelify'),
+    browser = require('gulp-browserify'),
     concat  = require('gulp-concat'),
     eslint  = require('gulp-eslint'),
     gulp    = require('gulp'),
@@ -16,7 +18,7 @@ var ap      = require('gulp-autoprefixer'),
 
 //// DEFAULT TASK
 
-gulp.task('default', ['pug', 'bs', 'scripts', 'watch']);
+gulp.task('default', ['pug', 'scripts', 'bs', 'watch']);
 
 /// BROWSER-SYNC
 
@@ -57,18 +59,29 @@ gulp.task('style', function() {
 });
 
 //// JAVASCRIPT TASKS
-
+// , ['eslint', 'process']
 gulp.task('scripts', ['eslint'], function() {
+  gulp.src('src/js/concat.js')
+      .pipe(browser({
+        transform: babelify.configure({
+          presets: ['es2015', 'react']
+        })
+      }))
+      .pipe(rename('bundle.js'))
+      .pipe(gulp.dest('public/assets/js'))
+});
+
+gulp.task('process', function() {
   gulp.src('src/js/**/*.js')
       .pipe(srcm.init())
       .pipe(babel({
         presets: ['es2015', 'react']
       }))
-      .pipe(concat('bundle.js'))
+      .pipe(concat('concat.js'))
       // only if gulp --type production
       .pipe(gutil.env.type === 'production' ? ugly() : gutil.noop())
       .pipe(srcm.write())
-      .pipe(gulp.dest("public/assets/js"));
+      .pipe(gulp.dest("src/js"));
 });
 
 gulp.task('eslint', function() {
