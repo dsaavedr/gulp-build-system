@@ -5,7 +5,7 @@ export default class Test extends React.Component {
 
     return (
       <div>
-        <h1> {this.props.name} </h1>
+        <h1 className="text-center"> {this.props.msg} </h1>
       </div>
     );
   };

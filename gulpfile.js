@@ -1,24 +1,29 @@
-var ap      = require('gulp-autoprefixer'),
-    babel   = require('gulp-babel'),
-    babelify= require('babelify'),
-    browser = require('gulp-browserify'),
-    concat  = require('gulp-concat'),
-    eslint  = require('gulp-eslint'),
-    gulp    = require('gulp'),
-    gutil   = require('gulp-util')
-    pug     = require('gulp-pug'),
-    rename  = require('gulp-rename'),
-    sass    = require('gulp-sass'),
-    srcm    = require('gulp-sourcemaps'),
-    ugly    = require('gulp-uglify'),
+var autoprefix= require('gulp-autoprefixer'),
+    babel     = require('gulp-babel'),
+    babelify  = require('babelify'),
+    browserify= require('gulp-browserify'),
+    concat    = require('gulp-concat'),
+    eslint    = require('gulp-eslint'),
+    gulp      = require('gulp'),
+    gutil     = require('gulp-util')
+    pug       = require('gulp-pug'),
+    rename    = require('gulp-rename'),
+    sass      = require('gulp-sass'),
+    sourceMap = require('gulp-sourcemaps'),
+    ugly      = require('gulp-uglify'),
 
-    bs      = require('browser-sync'),
-    del     = require('del');
+    bs        = require('browser-sync'),
+    del       = require('del'),
+    reload    = bs.reload;
 
 
 //// DEFAULT TASK
 
-gulp.task('default', ['pug', 'scripts', 'bs', 'watch']);
+gulp.task('default', ['pug', 'scripts', 'bs', 'watch'], function () {
+  if (gutil.env.type==='production') {
+    process.env.NODE_ENV==='production'
+  }
+});
 
 /// BROWSER-SYNC
 
@@ -45,23 +50,50 @@ gulp.task('pug', function() {
       .pipe(pug({
         pretty:true
       }))
-      .pipe(gulp.dest('public/assets/HTML'));
+      .pipe(gulp.dest('public/assets/HTML'))
+      .pipe(reload({
+        stream: true
+      }));
 });
 
 //// CSS TASKS
 
 gulp.task('style', function() {
   gulp.src('src/sass/**/*.sass')
-      .pipe(srcm.init())
+      .pipe(sourceMap.init())
       .pipe(sass().on('error', sass.logError))
-      .pipe(srcm.write())
-      .pipe(gulp.dest('public/assets/stylesheets'));
+      .pipe(autoprefix({
+        browsers: ['last 2 versions'],
+        cascade: gutil.env.type!=='production'
+      }))
+      .pipe(gutil.env.type==='production' ? ugly() : gutil.noop())
+      .pipe(sourceMap.write())
+      .pipe(gulp.dest('public/assets/stylesheets'))
+      .pipe(reload({
+        stream: true
+      }));
 });
 
 //// JAVASCRIPT TASKS
 
 gulp.task('scripts', ['eslint'], function() {
-  
+  gulp.src('src/js/s1.js')
+      // .pipe(babel({
+      //   presets: ['es2015', 'react']
+      // }))
+      .pipe(sourceMap.init())
+      .pipe(browserify({
+        transform: babelify.configure({
+          presets: ['es2015', 'react']
+        })
+      }))
+      .pipe(gutil.env.type==='production' ? ugly() : gutil.noop())
+      .pipe(rename('bundle.js'))
+      .pipe(sourceMap.write())
+      .pipe(gulp.dest('public/assets/js'))
+      .pipe(reload({
+        stream: true
+      }));
 });
 
 gulp.task('eslint', function() {
