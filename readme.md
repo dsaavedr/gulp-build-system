@@ -12,9 +12,9 @@ The file contains the following -pretty common- tasks:
 2. HTML task that compiles `pug` (didn´t add much else because I usually keep my HTML light)
 3. CSS tasks that compiles `sass`, sourcemaps, autoprefixes compiled CSS and uglifies it if `NODE_ENV` is on production mode (which I set up whenever `gulp --type production` gets called)
 4. Javascript tasks that do the following:
-  1. Calls `Eslint`, which evaluates all files on `src/js/**/*.js` using `react`, `es6` and `jsx` plugins
-  2. Sourcemaps
-  3. Uses `Browserify` to compile `public/assets/js/bundle.js`, which contain all necessary code
-  4. `Browserify` calls `Babelify`, which compiles the code with `es2015` and `react` env plugins.
-  5. Uglifies it if `gutil.env.type === 'production'`
-  6. Renames the file `bundle.js`
+    1. Calls `Eslint`, which evaluates all files on `src/js/**/*.js` using `react`, `es6` and `jsx` plugins
+    2. Sourcemaps
+    3. Uses `Browserify` to compile `public/assets/js/bundle.js`, which contain all necessary code
+    4. `Browserify` calls `Babelify`, which compiles the code with `es2015` and `react` env plugins.
+    5. Uglifies it if `gutil.env.type === 'production'`
+    6. Renames the file `bundle.js`
