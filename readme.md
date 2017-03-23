@@ -25,4 +25,4 @@ Simply `git clone` the repository and install all the dev-dependencies width npm
 
 ## Contributing
 
-Feel free to send a pull request with any additions or variations you consider might improve the system efficiency.
+Feel free to send a pull request with any additions or variations you consider might improve the system's efficiency and usefulness.
