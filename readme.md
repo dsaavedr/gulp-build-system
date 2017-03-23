@@ -18,3 +18,11 @@ The file contains the following -pretty common- tasks:
     4. `Browserify` calls `Babelify`, which compiles the code with `es2015` and `react` env plugins.
     5. Uglifies it if `gutil.env.type === 'production'`
     6. Renames the file `bundle.js`
+
+## Using the system
+
+Simply `git clone` the repository and install all the dev-dependencies width npm. The plugins in the setup are laid out accordingly to my preferences, but can be easily tweaked.
+
+## Contributing
+
+Feel free to send a pull request with any additions or variations you consider might improve the system efficiency.
